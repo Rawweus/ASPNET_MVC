@@ -1,0 +1,14 @@
+#dashboard {
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 700px;
+  }
+
+  .btn-theme-s {
+    margin-top: 20px;
+    display: inline-block;
+  }
+}

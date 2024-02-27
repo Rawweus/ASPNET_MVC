@@ -1,0 +1,48 @@
+#integration {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .integration-header {
+      h1,
+      p {
+        margin: 20px 270px 20px;
+      }
+
+      .text-lg {
+        color: #9397ad;
+      }
+    }
+
+    .integration-options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1000px; // Anpassa denna bredd efter din design
+        margin: 0 auto;
+        gap: 20px;
+      
+        .integration-item {
+            margin-top: 40px;
+            width: calc(25% - 40px); // Beräknar bredden för 4 objekt per rad, justera marginalen efter behov
+            margin-bottom: 40px; // Ger utrymme mellan raderna
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+      
+          img {
+            width: 50px; // Justera enligt din ikons faktiska storlek
+            margin-bottom: 20px; // Utrymme mellan ikon och text
+          }
+      
+          p {
+            text-align: left;
+            color: #565973;
+          }
+        }
+      }
+      
+  }
+}
