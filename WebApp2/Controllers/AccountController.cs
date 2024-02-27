@@ -10,15 +10,16 @@ namespace WebApp2.Controllers
             return View();
         }
 
-        public IActionResult SignIn()
+        [Route("/signup")]
+		public IActionResult SignUp()
+		{
+			return View();
+		}
+
+		[Route("/signin")]
+		public IActionResult SignIn()
         {
             ViewData["Title"] = "Sign in";
-            return View();
-        }
-
-        public IActionResult SignUp()
-        {
-            ViewData["Title"] = "Sign up";
             return View();
         }
 
