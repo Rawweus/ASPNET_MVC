@@ -2,5 +2,21 @@
   {
     "outputFile": "wwwroot/css/site.css",
     "inputFile": "wwwroot/css/site.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/scss/components/_forms.css",
+    "inputFile": "wwwroot/css/scss/components/_forms.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/scss/components/_links.css",
+    "inputFile": "wwwroot/css/scss/components/_links.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/scss/core/_typography.css",
+    "inputFile": "wwwroot/css/scss/core/_typography.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/scss/components/_buttons.css",
+    "inputFile": "wwwroot/css/scss/components/_buttons.scss"
   }
 ]

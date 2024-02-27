@@ -1,30 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp2.Models;
 
 namespace WebApp2.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index()
+
+        [Route("/signup")]
+        [HttpGet]
+		public IActionResult SignUp()
+		{
+            var model = new SignUpModel();
+            return View(model);
+		}
+
+
+        [Route("/signup")]
+        [HttpPost]
+        public IActionResult SignUp(SignUpModel model)
         {
-            ViewData["Title"] = "Profile";
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("SignIn", "Account");
         }
 
-        public IActionResult SignIn()
-        {
-            ViewData["Title"] = "Sign in";
-            return View();
-        }
-
-        public IActionResult SignUp()
-        {
-            ViewData["Title"] = "Sign up";
-            return View();
-        }
-
-        public new IActionResult SignOut()
-        {
-            return View();
-        }
     }
 }
