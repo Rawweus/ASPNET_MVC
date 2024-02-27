@@ -1,4 +1,4 @@
-#signup {
+.signup {
     height: 100%;
 
     .container {
@@ -12,7 +12,7 @@
         }
 
         @include xl {
-            width: 45%;
+            width: 40%;
         }
 
         form {
@@ -54,7 +54,7 @@
                     padding: 1rem 0;
                 }
 
-                #form-button {
+                #form-submit {
                     grid-area: button;
                 }
             }
