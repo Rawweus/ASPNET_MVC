@@ -1,1 +1,48 @@
-﻿
+﻿@model WebApp2.Models.SignInModel
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<section class="signin">
+    <div class="container">
+        <form method="post" asp-controller="Account" asp-action="SignIn">
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+            <h1>Welcome Back</h1>
+            <p>Don't have an account yet? <a asp-controller="Account" asp-action="SignUp">Sign up here</a></p>
+            <div class="content">
+                <div id="form-email" class="input-group">
+                    <label asp-for="Email"></label>
+                    <span asp-validation-for="Email"></span>
+                    <input asp-for="Email" />
+                </div>
+                <div id="form-password" class="input-group">
+                    <label asp-for="Password"></label>
+                    <span asp-validation-for="Password"></span>
+                    <input asp-for="Password" />
+                </div>
+                <div id="form-remember" class="checkbox">
+                    <div class="checkbox-group">
+                        <input asp-for="RememberMe" />
+                        <label asp-for="RememberMe">I Agree to the <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a>.</label>
+                    </div>
+                </div>
+
+                <button id="form-submit" class="btn-theme-s" type="submit">Sign in</button>
+
+                <a id="form-forgot-password" asp-controller="Account" asp-action="Forgot">Forgot your password?</a>
+            </div>
+
+           
+        
+        </form>
+    </div>
+</section>
