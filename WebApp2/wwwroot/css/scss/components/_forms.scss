@@ -80,26 +80,24 @@ textarea {
             color: $danger;
         }
     }
-}
 
+    &.field-validation-error {
+        @include text-s;
+        color: $danger;
 
-&.field-validation-error {
-    @include text-s;
-    color: $danger;
-
-    &::after {
-        position: absolute;
-        right: 10px;
-        top: 40px;
-        z-index: 10;
-        font-size: 2em;
-        display: block;
-        content: '\2BBF';
+        &::after {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            z-index: 10;
+            font-size: 2em;
+            display: block;
+            content: '\2BBF';
+        }
     }
 }
 
-}
-}
+
 
 label {
     margin-bottom: 0.188rem;

@@ -1,4 +1,5 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+﻿@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 html, body {
   line-height: 160%;
   font-weight: 400;
@@ -264,74 +265,66 @@ form input.input-validation-error::placeholder {
   color: #EF4444;
 }
 
-/*
-&.field-validation-error {
-    @include text-s;
-    color: $danger;
-
-    &::after {
-        position: absolute;
-        right: 10px;
-        top: 40px;
-        z-index: 10;
-        font-size: 2em;
-        display: block;
-        content: '\2BBF';
-    }
+textarea {
+  padding: 1rem;
+  border-radius: 0.5rem !important;
+  border: 0.063rem solid #D4D7E5;
+  resize: none;
 }
-
+textarea::placeholder {
+  opacity: 0.4;
 }
+textarea.input-validation-error {
+  border: 0.063rem solid #EF4444 !important;
+  color: #EF4444;
+}
+textarea.input-validation-error::placeholder {
+  color: #EF4444;
+}
+textarea.field-validation-error {
+  line-height: 160%;
+  font-weight: 400;
+  color: #565973;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px !important;
+  color: #EF4444;
+}
+textarea.field-validation-error::after {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  z-index: 10;
+  font-size: 2em;
+  display: block;
+  content: "⮿";
 }
 
 label {
-    margin-bottom: 0.188rem;
-    font-weight: 700;
+  margin-bottom: 0.188rem;
+  font-weight: 700;
 }
 
 input {
-    padding: 1rem;
-    border-radius: 0.5rem !important;
-    border: 0.063rem solid $gray-400;
-
-    &::placeholder {
-        opacity: 0.4;
-    }
-
-    &.input-validation-error {
-        position: relative;
-        border: 0.063rem solid $danger !important;
-        color: $danger;
-
-        &::placeholder {
-            color: $danger;
-        }
-    }
-
-    &.focus {
-        outline: none;
-        border: 0.063rem solid $gray-600;
-    }
+  padding: 1rem;
+  border-radius: 0.5rem !important;
+  border: 0.063rem solid #D4D7E5;
+}
+input::placeholder {
+  opacity: 0.4;
+}
+input.input-validation-error {
+  position: relative;
+  border: 0.063rem solid #EF4444 !important;
+  color: #EF4444;
+}
+input.input-validation-error::placeholder {
+  color: #EF4444;
+}
+input.focus {
+  outline: none;
+  border: 0.063rem solid #9397AD;
 }
 
-textarea {
-    padding: 1rem;
-    border-radius: 0.5rem !important;
-    border: 0.063rem solid $gray-400;
-    resize: none;
-
-    &::placeholder {
-        opacity: 0.4;
-    }
-
-    &.input-validation-error {
-        border: 0.063rem solid $danger !important;
-        color: $danger;
-
-        &::placeholder {
-            color: $danger;
-        }
-    }
-}*/
 .btn-theme {
   border-radius: 6px;
   text-align: center;
@@ -871,6 +864,123 @@ header .container .btn-mobile {
   grid-area: forgot;
   margin: 1rem 0 0 0;
   text-align: center;
+}
+
+#account-details .container {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  gap: 150px;
+  margin-bottom: 70px;
+}
+#account-details .container aside {
+  border-right: 1px solid #E2E5F1;
+  padding-right: 20px;
+}
+#account-details .container aside .profile-info {
+  margin: 20px;
+  text-align: center;
+}
+#account-details .container aside .profile-info h5 {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+#account-details .container aside .profile-info p {
+  line-height: 160%;
+  font-weight: 400;
+  color: #565973;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px !important;
+}
+#account-details .container aside nav {
+  margin-top: 50px;
+  text-align: left;
+}
+#account-details .container aside nav a {
+  margin: 10px 0;
+  text-align: left;
+  justify-content: flex-start;
+}
+#account-details .container aside nav .btn-theme-s {
+  text-align: left;
+  justify-content: flex-start;
+}
+#account-details .container .details {
+  margin-top: 50px;
+  width: 100%;
+}
+#account-details .container .details .basic-info form {
+  padding: 1rem;
+}
+#account-details .container .details .basic-info form h5 {
+  color: #6366F1;
+}
+#account-details .container .details .basic-info form .content {
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "firstname lastname" "email phone" "bio bio" "buttons buttons";
+}
+#account-details .container .details .basic-info form .content #form-firstname {
+  grid-area: firstname;
+}
+#account-details .container .details .basic-info form .content #form-lastname {
+  grid-area: lastname;
+}
+#account-details .container .details .basic-info form .content #form-email {
+  grid-area: email;
+}
+#account-details .container .details .basic-info form .content #form-phone {
+  grid-area: phone;
+}
+#account-details .container .details .basic-info form .content #form-bio {
+  grid-area: bio;
+}
+#account-details .container .details .basic-info form .content #form-bio span {
+  color: #B4B7C9;
+  font-weight: 400;
+}
+#account-details .container .details .basic-info form .content .form-buttons {
+  grid-area: buttons;
+  margin: 20px 0;
+  display: flex;
+  gap: 20px;
+}
+#account-details .container .details .address-info {
+  margin-top: 30px;
+}
+#account-details .container .details .address-info form {
+  padding: 1rem;
+}
+#account-details .container .details .address-info form h5 {
+  color: #6366F1;
+}
+#account-details .container .details .address-info form .content {
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "addressline_1 addressline_1" "addressline_2 addressline_2" "postalcode city" "buttons buttons";
+}
+#account-details .container .details .address-info form .content #form-addressline-1 {
+  grid-area: addressline_1;
+}
+#account-details .container .details .address-info form .content #form-addressline-2 {
+  grid-area: addressline_2;
+}
+#account-details .container .details .address-info form .content #form-addressline-2 span {
+  color: #B4B7C9;
+  font-weight: 400;
+}
+#account-details .container .details .address-info form .content #form-postalcode {
+  grid-area: postalcode;
+}
+#account-details .container .details .address-info form .content #form-city {
+  grid-area: city;
+}
+#account-details .container .details .address-info form .content .form-buttons {
+  grid-area: buttons;
+  margin: 20px 0;
+  display: flex;
+  gap: 20px;
 }
 
 footer {

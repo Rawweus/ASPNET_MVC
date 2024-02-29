@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp2.Models;
+using WebApp2.ViewModels;
 
 namespace WebApp2.Controllers;
 
@@ -15,10 +16,10 @@ public class AccountsController : Controller
     [Route("/account")]
 	public IActionResult Details()
 	{
-		var model = new AccountDetailsBasicInfoModel();
+		var viewModel = new AccountDetailsViewModel();
 		//model.BasicInfo = _accountService.GetBasicInfo();
 		//model.AddressInfo = _accountService.GetBasicInfo();
-		return View(model);
+		return View(viewModel);
 	}
 
 	[HttpPost]
