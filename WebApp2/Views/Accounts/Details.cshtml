@@ -62,7 +62,7 @@
 				</form>
 			</section>
 			<hr />
-			<section class="adress-info">
+			<section class="address-info">
 				<form method="post" asp-controller="Account" asp-action="AddressInfo">
 					<h5>Address</h5>
 
@@ -90,7 +90,10 @@
 							<span asp-validation-for="AddressInfo.City"></span>
 							<input asp-for="AddressInfo.City" />
 						</div>
-
+						<div class="form-buttons">
+							<button class="btn-gray" type="reset">Cancel</button>
+							<button class="btn-theme" type="submit">Save changes</button>
+						</div>
 					</div>
 				</form>
 
