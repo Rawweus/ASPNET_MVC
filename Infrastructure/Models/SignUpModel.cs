@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WebApp2.Helpers;
+﻿using Infrastructure.Helpers;
+using System.ComponentModel.DataAnnotations;
 
-namespace WebApp2.Models;
+namespace Infrastructure.Models;
 
 public class SignUpModel
 {
@@ -22,8 +22,8 @@ public class SignUpModel
 
 	[DataType(DataType.Password)]
 	[Display(Name = "Password", Prompt = "Enter your password", Order = 3)]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$", ErrorMessage = "Enter a valid password")]
-    public string Password { get; set; } = null!;
+	[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$", ErrorMessage = "Enter a valid password")]
+	public string Password { get; set; } = null!;
 
 	[DataType(DataType.Password)]
 	[Display(Name = "Confirm password", Prompt = "Confirm password", Order = 4)]
@@ -34,4 +34,3 @@ public class SignUpModel
 	[CheckBoxRequired(ErrorMessage = "You must agree to the terms & conditions")]
 	public bool TermsAndConditions { get; set; } = false;
 }
-

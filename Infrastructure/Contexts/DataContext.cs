@@ -8,4 +8,8 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
 	public DbSet<AddressEntity> Addresses { get; set; }
 
 	public DbSet<UserEntity> Users { get; set; }
+
+	public DbSet<FeatureEntity> Features { get; set; }
+
+	public DbSet<FeatureItemEntity> FeaturesItem { get; set; }
 }

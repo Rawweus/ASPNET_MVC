@@ -1,4 +1,4 @@
-﻿@model WebApp2.Models.SignInModel
+﻿@model Infrastructure.Models.SignInModel
 
 @{
     ViewData["Title"] = "Sign In";
@@ -32,7 +32,7 @@
                 <div id="form-remember" class="checkbox">
                     <div class="checkbox-group">
                         <input asp-for="RememberMe" />
-                        <label asp-for="RememberMe">I Agree to the <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a>.</label>
+                        <label asp-for="RememberMe">Remember me</label>
                     </div>
                 </div>
 
@@ -40,9 +40,6 @@
 
                 <a id="form-forgot-password" asp-controller="Account" asp-action="Forgot">Forgot your password?</a>
             </div>
-
-           
-        
         </form>
     </div>
 </section>
