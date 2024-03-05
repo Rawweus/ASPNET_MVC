@@ -23,3 +23,16 @@ namespace WebApp2.Models
 
 	}
 }
+
+/*
+`AccountDetailsAddressInfoModel` definierar strukturen för adressinformation 
+i användarkontodetaljer. Innehåller fält för två adresslinjer, postnummer och stad.
+
+- `Addressline_1`: Första adressraden, obligatorisk.
+- `Addressline_2`: Andra adressraden, valfri.
+- `PostalCode`: Postnummer, obligatorisk och validerad som postnummer.
+- `City`: Stad, obligatorisk.
+
+Attribut används för att ange fältens presentation och valideringsregler 
+i formulär, inklusive användarvänliga meddelanden vid valideringsfel.
+*/

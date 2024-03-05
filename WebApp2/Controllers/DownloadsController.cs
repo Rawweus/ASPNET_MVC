@@ -11,3 +11,8 @@ namespace WebApp2.Controllers
         }
     }
 }
+
+/*
+`DownloadsController` visar en sida för nedladdningar. 
+Sätter titeln "Downloads" med `ViewData` och returnerar vyn.
+*/

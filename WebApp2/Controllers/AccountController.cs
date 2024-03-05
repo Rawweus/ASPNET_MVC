@@ -59,3 +59,32 @@ namespace WebApp2.Controllers
 
 	}
 }
+
+
+/*
+`AccountController` hanterar användarregistrering och inloggning i din ASP.NET MVC-applikation.
+Den använder `UserService` för att interagera med användarrelaterade tjänster.
+
+- `SignUp() [HttpGet]`: Renderar en vy för användarregistrering. 
+Den skapar och returnerar ett tomt `SignUpModel` till vyn.
+
+- `SignUp(SignUpModel model) [HttpPost]`: Tar emot ett `SignUpModel` 
+från registreringsformuläret. Om modellen är giltig, anropar den `CreateUserAsync` 
+i `UserService` för att skapa en ny användare. Om användaren skapas framgångsrikt, 
+omdirigeras användaren till inloggningssidan. Annars renderas registreringsvyn 
+på nytt med den inmatade datan.
+
+- `SignIn() [HttpGet]`: Renderar en vy för användarinloggning. Den skapar och returnerar 
+ett tomt `SignInModel` till vyn.
+
+- `SignIn(SignInModel model) [HttpPost]`: Tar emot ett `SignInModel` från 
+inloggningsformuläret. Om modellen är giltig, försöker den logga in användaren 
+genom att anropa `SignInUserAsync` i `UserService`. Vid framgångsrik inloggning 
+omdirigeras användaren till en annan sida (i detta fall, "Details" i "Account"-kontrollern). 
+Om inloggningen misslyckas på grund av felaktig e-post eller lösenord, 
+renderas inloggningsvyn på nytt med ett felmeddelande.
+
+Denna kontroller möjliggör enkel hantering av användarregistrering och 
+inloggning, med tydlig separation av ansvarsområden mellan 
+kontrollern och tjänstlagret.
+*/

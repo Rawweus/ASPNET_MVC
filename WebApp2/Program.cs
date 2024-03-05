@@ -31,3 +31,30 @@ app.MapControllerRoute(
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+
+/*
+Program.cs konfigurerar och startar webbapplikationen. Här definieras tjänster och 
+middleware som applikationen använder.
+
+- 'AddControllersWithViews()' lägger till stöd för MVC-kontrollers och vyer.
+
+- 'AddDbContext<DataContext>()' konfigurerar Entity Framework Core för att använda 
+SQL Server med en anslutningssträng definierad i applikationens konfigurationsfiler.
+
+- 'AddScoped<>' registrerar repositories och tjänster med Scoped livstid, 
+vilket innebär att en ny instans skapas per request.
+
+- 'UseHsts()' och 'UseHttpsRedirection()' aktiverar HTTP Strict Transport Security 
+och omdirigering från HTTP till HTTPS.
+
+- 'UseStaticFiles()' tillåter applikationen att tjäna statiska filer, såsom bilder och CSS.
+
+- 'UseRouting()' och 'UseAuthorization()' lägger till routing och auktorisation 
+till requesthanteringspipelinen.
+
+- 'MapControllerRoute()' definierar routingmönstret för MVC-kontrollers.
+
+När konfigurationen är klar bygger 'builder.Build()' och 'app.Run()' startar webbservern som lyssnar på inkommande HTTP-förfrågningar.
+*/

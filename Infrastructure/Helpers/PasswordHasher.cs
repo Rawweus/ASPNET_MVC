@@ -30,3 +30,21 @@ public class PasswordHasher
 		return true;
 	}
 }
+
+/*
+
+Denna klass erbjuder metoder för att säkert hantera lösenord.
+
+`GenerateSecurePassword` tar ett lösenord som input och genererar en 
+säker hash och en säkerhetsnyckel med HMACSHA512. 
+Den returnerar båda som base64-strängar. Detta används när ett nytt lösenord ska sparas.
+
+`ValidateSecurePassword` jämför ett angivet lösenord med en sparad hash och säkerhetsnyckel. 
+Den omvandlar först `securityKey` och `hash` från base64 till byte array, 
+använder säkerhetsnyckeln för att skapa en HMACSHA512-hash av det angivna 
+lösenordet och jämför det med den sparade hashen. Om de matchar är lösenordet korrekt.
+
+Dessa metoder hjälper till att säkert lagra och verifiera lösenord, 
+vilket är avgörande för att skydda användarinformation. 
+
+*/

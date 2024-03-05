@@ -44,3 +44,24 @@ public class UserRepository(DataContext context) : Repo<UserEntity>(context)
 		}
 	}
 }
+
+
+/*
+`UserRepository` ärver från den generiska `Repo<UserEntity>`-klassen och 
+anpassar dess funktionalitet specifikt för `UserEntity`-hantering. 
+Det utnyttjar `DataContext` för att kommunicera med databasen och utföra 
+operationer på användardata.
+
+- `GetAllAsync`: Asynkront hämtar alla användare från databasen inklusive 
+deras adressinformation genom eager loading med `.Include(i => i.Address)`. 
+Returnerar en samling av `UserEntity`-objekt eller ett felmeddelande om något går fel.
+- `GetOneAsync`: Använder ett LINQ-uttryck för att asynkront hitta en specifik 
+användare baserat på ett givet villkor (`predicate`). Den inkluderar användarens 
+adressinformation och returnerar den hittade användaren eller indikerar 
+att användaren inte finns.
+
+Dessa metodöverlagringar tillåter detaljerad hantering av användardata 
+och deras relationer, såsom att associera varje användare med deras adress. 
+`ResponseFactory` används för att skapa konsekventa responsobjekt, 
+vilket underlättar hantering av framgångsrika operationer och fel.
+*/

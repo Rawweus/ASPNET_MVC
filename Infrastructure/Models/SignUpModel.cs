@@ -34,3 +34,28 @@ public class SignUpModel
 	[CheckBoxRequired(ErrorMessage = "You must agree to the terms & conditions")]
 	public bool TermsAndConditions { get; set; } = false;
 }
+
+/*
+
+Denna `SignUpModel` används för registreringsformulär där nya användare skapar ett konto. 
+Varje fält representerar en del av informationen som användaren måste ange:
+
+- Förnamn och efternamn är obligatoriska fält markerade med `[Required]`, 
+vilket betyder att användaren måste fylla i dem.
+
+- E-postadress kontrolleras både för korrekt format genom `[RegularExpression]` 
+och är obligatorisk.
+
+- Lösenord måste uppfylla specificerade krav (bokstäver, siffror, specialtecken) 
+angivna i `[RegularExpression]` och är också obligatoriskt. 
+Det finns även ett fält för att bekräfta lösenordet, där `[Compare]` 
+används för att säkerställa att det matchar det första lösenordet.
+
+- TermsAndConditions är ett booleskt fält som måste vara sant för att 
+registreringen ska gå igenom, vilket verifieras med det anpassade 
+valideringsattributet `[CheckBoxRequired]`.
+
+Denna modell hjälper till att säkerställa att all användarinformation som 
+samlas in under registreringsprocessen är korrekt och uppfyller systemets krav.
+
+*/

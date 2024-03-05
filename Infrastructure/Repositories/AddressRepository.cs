@@ -7,3 +7,18 @@ public class AddressRepository(DataContext context) : Repo<AddressEntity>(contex
 {
 	private readonly DataContext _context = context;
 }
+
+/*
+
+`AddressRepository` är en del av `Repositories`-mappen och ärver från en generisk 
+`Repo`-klass som hanterar CRUD-operationer för `AddressEntity`. 
+Denna klass tar emot en `DataContext` vid instansiering, vilket gör att 
+den kan interagera med databasen för adressrelaterade operationer.
+
+- `_context`: En privat readonly-fält som håller en instans av `DataContext`. 
+Detta används för att utföra databasoperationer relaterade till adressentiteter.
+
+`AddressRepository` utgör en bro mellan databasen och applikationslogiken, 
+där specifika databasoperationer för adressentiteter kan definieras och hanteras.
+
+*/

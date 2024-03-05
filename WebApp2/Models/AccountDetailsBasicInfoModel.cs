@@ -31,3 +31,27 @@ namespace WebApp2.Models
 		public string Biography { get; set; } = null!;
 	}
 }
+
+
+/*
+`AccountDetailsBasicInfoModel` är avsedd för att hantera grundläggande personlig 
+information för en användarprofil, såsom namn, e-post, telefonnummer och en kort biografi.
+
+- `ProfileImage`: En valfri URL till en profilbild. Använder `DataType.ImageUrl` 
+för att ange att det ska vara en bild-URL.
+
+- `FirstName` och `LastName`: Användarens för- och efternamn, båda obligatoriska 
+fält markerade med `Required` för att säkerställa att de fylls i.
+
+- `Email`: Användarens e-postadress, som måste matcha ett specifikt mönster 
+(`RegularExpression`) för att valideras som en giltig e-postadress.
+
+- `Phone`: Användarens telefonnummer, markerat som obligatoriskt och ska följa 
+formatet för telefonnummer (`DataType.PhoneNumber`).
+
+- `Biography`: En valfri kort biografi om användaren, där text kan inmatas 
+över flera rader (`DataType.MultilineText`).
+
+Modellen definierar strukturen för insamling och validering av användardata 
+i en användarprofil, med tydlig presentation och valideringsfeedback för slutanvändaren.
+*/

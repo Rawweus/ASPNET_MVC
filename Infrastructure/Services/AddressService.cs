@@ -51,3 +51,25 @@ public class AddressService(AddressRepository repository)
 		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
 	}
 }
+
+/*
+`AddressService` använder `AddressRepository` för att hantera adressrelaterade 
+operationer som att hämta eller skapa adresser. Detta service-lager förenklar 
+interaktionen mellan applikationens användargränssnitt/logik och datalagret.
+
+- `GetOrCreateAddressAsync`: Försöker först hitta en befintlig adress med 
+angivna parametrar. Om adressen inte finns, skapas en ny adress. 
+Detta säkerställer att adresser inte dupliceras i databasen.
+
+- `CreateAddressAsync`: Skapar en ny adress efter att ha kontrollerat att en 
+likadan adress inte redan existerar i databasen. Använder `AddressFactory` 
+för att skapa adressobjekt och `AddressRepository` för att spara adressen. 
+Returnerar den skapade adressen eller ett felmeddelande.
+
+- `GetAddressAsync`: Söker efter en adress baserat på gatunamn, postnummer och stad. 
+Returnerar adressen om den hittas, annars ett meddelande om att adressen inte kunde hittas.
+
+Dessa metoder bidrar till att effektivisera hanteringen av adressdata, vilket 
+underlättar skapandet av nya adresser och sökning efter befintliga adresser 
+utan att introducera duplicering.
+*/

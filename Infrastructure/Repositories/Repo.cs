@@ -118,3 +118,38 @@ public abstract class Repo<TEntity> where TEntity : class
 		}
 	}
 }
+
+
+/*
+`Repo<TEntity>` är en abstrakt basrepositoryklass som definierar en uppsättning 
+asynkrona CRUD-operationer (Skapa, Läsa, Uppdatera, Radera) för en generell 
+entitetstyp `TEntity`. Denna klass följer Single Responsibility Principle (SRP) 
+från SOLID-principerna genom att varje metod ansvarar för en specifik typ av databasoperation. 
+
+Klassen använder `DataContext` för databasinteraktion och `ResponseFactory` 
+för att skapa enhetliga responsobjekt.
+
+- `CreateOneAsync`: Lägger till en ny entitet i databasen och returnerar den 
+sparade entiteten om operationen lyckas, annars returneras ett felmeddelande.
+
+- `GetAllAsync`: Hämtar alla entiteter av typen `TEntity` från databasen och 
+returnerar dem som en samling, eller ett felmeddelande vid undantag.
+
+- `GetOneAsync`: Använder ett LINQ-uttryck (`Expression<Func<TEntity, bool>>`) 
+som predikat för att hitta en specifik entitet. Returnerar den hittade entiteten 
+eller indikerar att den inte finns.
+
+- `UpdateOneAsync`: Uppdaterar en befintlig entitet baserat på ett predikat. 
+Om entiteten finns uppdateras den med de nya värdena från `updatedEntity`.
+
+- `DeleteOneAsync`: Tar bort en entitet som matchar det angivna predikatet från 
+databasen och returnerar ett meddelande om framgång, eller indikerar 
+att entiteten inte kunde hittas.
+
+- `AlreadyExistsAsync`: Kontrollerar om det finns någon entitet som uppfyller 
+det angivna predikatet, användbart för att validera unika data innan insättning.
+
+Denna struktur tillåter återanvändning och flexibilitet i hanteringen av 
+olika entitetstyper, samtidigt som den förenklar skapandet av responsobjekt 
+för kommunikation med applikationens andra delar.
+*/
