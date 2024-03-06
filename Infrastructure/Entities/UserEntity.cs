@@ -1,25 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infrastructure.Entities;
 
-public class UserEntity
+using Microsoft.AspNetCore.Identity;
+
+public class UserEntity : IdentityUser
 {
-	[Key]
-	public string Id { get; set; } = null!;
-	public string FirstName { get; set; } = null!;
-	public string LastName { get; set; } = null!;
-	public string Email { get; set; } = null!;
-	public string Password { get; set; } = null!;
-	public string SecurityKey { get; set; } = null!;
-	public string? Phone {  get; set; }
-	public string? Bio {  get; set; }
-	public DateTime? Created { get; set; }
-	public DateTime? Modified { get; set; }
+    // Dina egna fält
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string? Phone { get; set; }
+    public string? Bio { get; set; }
+    public DateTime? Created { get; set; }
+    public DateTime? Modified { get; set; }
 
-	public int? AddressId { get; set; }
-	public AddressEntity? Address { get; set; }
-
+    // AddressId och Address definieras här om du vill behålla en relation mellan användare och adresser
+    public int? AddressId { get; set; }
+    public AddressEntity? Address { get; set; }
 }
+
 
 /* `UserEntity.cs` finns i `Entities`-mappen i `Infrastructure`-projektet.
 

@@ -14,21 +14,18 @@ public class PasswordHasher
 		return (Convert.ToBase64String(securityKey), Convert.ToBase64String(hashedPassword));
 	}
 
-	public static bool ValidateSecurePassword(string password, string hash, string securityKey)
-	{
-		var security = Convert.FromBase64String(securityKey);
-		var pwd = Convert.FromBase64String(hash);
+    public static bool ValidateSecurePassword(string password, string hash, string securityKey)
+    {
+        var security = Convert.FromBase64String(securityKey);
+        var pwd = Convert.FromBase64String(hash); // Konverterad hash från base64 till byte[]
 
-		using var hmac = new HMACSHA512(security);
-		var hashedPassword = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        using var hmac = new HMACSHA512(security);
+        var hashedPassword = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-		for(var i = 0; i < hashedPassword.Length; i++)
-		{
-			if (hashedPassword[i] != hash[i])
-				return false;
-		}
-		return true;
-	}
+        // Korrekt jämförelse av de två byte-arrayerna
+        return hashedPassword.SequenceEqual(pwd);
+    }
+
 }
 
 /*

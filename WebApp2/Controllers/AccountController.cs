@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Models;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp2.Models;
 
@@ -50,14 +51,13 @@ namespace WebApp2.Controllers
 			{
 				var result = await _userService.SignInUserAsync(model); // Använd direkt model eftersom du inte har viewModel.Form
 				if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
-					return RedirectToAction("Details", "Account"); // Ändrat för att matcha din chefs beteende
+					return RedirectToAction("Details", "Accounts");
 			}
 
 			ModelState.AddModelError(string.Empty, "Incorrect email or password.");
 			return View(model);
 		}
-
-	}
+    }
 }
 
 

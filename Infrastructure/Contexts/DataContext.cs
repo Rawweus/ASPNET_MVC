@@ -1,20 +1,30 @@
-﻿using Infrastructure.Entities;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.Mime.MediaTypeNames;
+using Infrastructure.Entities; // Säkerställ att dina entitetsbanor är korrekta
 
 namespace Infrastructure.Contexts;
 
-public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
+// Ändra basen till IdentityDbContext för att inkludera stöd för Identity
+public class DataContext : IdentityDbContext<UserEntity>
 {
-	public DbSet<AddressEntity> Addresses { get; set; }
+    public DataContext(DbContextOptions<DataContext> options)
+        : base(options)
+    {
+    }
 
-	public DbSet<UserEntity> Users { get; set; }
+    // Behåll dina befintliga DbSet-deklarationer
+    public DbSet<AddressEntity> Addresses { get; set; }
+    public DbSet<FeatureEntity> Features { get; set; }
+    public DbSet<FeatureItemEntity> FeatureItems { get; set; } // Mindre ändring i namnet för konsistens
 
-	public DbSet<FeatureEntity> Features { get; set; }
+    // Övriga konfigurationer och metodöverlagringar vid behov
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+    }
 
-	public DbSet<FeatureItemEntity> FeaturesItem { get; set; }
 }
+
 
 /* 
 

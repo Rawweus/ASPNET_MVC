@@ -3,55 +3,72 @@ using Infrastructure.Factories;
 using Infrastructure.Helpers;
 using Infrastructure.Models;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
-namespace Infrastructure.Services;
-
-public class UserService(UserRepository repository, AddressService addressService)
+namespace Infrastructure.Services
 {
-	private readonly UserRepository _repository = repository;
-	private readonly AddressService _addressService = addressService;
+    public class UserService
+    {
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly AddressService _addressService;
 
+        public UserService(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, AddressService addressService)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _addressService = addressService;
+        }
 
-	public async Task<ResponseResult> CreateUserAsync(SignUpModel model)
-	{
-		try
-		{
-			var exists = await _repository.AlreadyExistsAsync(x => x.Email == model.Email);
-			if (exists.StatusCode == StatusCode.EXISTS)
-				return exists;
+        public async Task<ResponseResult> CreateUserAsync(SignUpModel model)
+        {
+            try
+            {
+                var user = new UserEntity
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    // Andra fält från SignUpModel kan tilldelas här
+                };
 
-			var result = await _repository.CreateOneAsync(UserFactory.Create(model));
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-			if (result.StatusCode != StatusCode.OK)
-				return result;
+                if (result.Succeeded)
+                {
+                    
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return ResponseFactory.Ok("User was created successfully.");
+                }
 
-			return ResponseFactory.Ok("User was created successfully.");
+                return ResponseFactory.Error(string.Join(";", result.Errors.Select(e => e.Description)));
+            }
+            catch (Exception ex)
+            {
+                return ResponseFactory.Error(ex.Message);
+            }
+        }
 
-			
-		}
-		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
-	}
+        public async Task<ResponseResult> SignInUserAsync(SignInModel model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-
-
-	public async Task<ResponseResult> SignInUserAsync(SignInModel model)
-	{
-		try
-		{
-			var result = await _repository.GetOneAsync(x => x.Email == model.Email);
-			if (result.StatusCode == StatusCode.OK && result.ContentResult != null)
-			{
-				var userEntity = (UserEntity)result.ContentResult;
-
-				if (PasswordHasher.ValidateSecurePassword(model.Password, userEntity.Password, userEntity.SecurityKey))
-					return ResponseFactory.Ok();
-			}
-
-			return ResponseFactory.Error("Incorrect email or password.");
-
-		}
-		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
-	}
+            if (result.Succeeded)
+            {
+                return ResponseFactory.Ok();
+            }
+            else if (result.IsLockedOut)
+            {
+                return ResponseFactory.Error("User account locked.");
+            }
+            else
+            {
+                return ResponseFactory.Error("Incorrect email or password.");
+            }
+        }
+    }
 }
 
 /*

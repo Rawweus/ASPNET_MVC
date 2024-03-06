@@ -1,41 +1,74 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApp2.Models;
-using WebApp2.ViewModels;
-
-namespace WebApp2.Controllers;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using WebApp2.ViewModels; // Uppdatera med korrekt namespace för din ViewModel
+using Infrastructure.Entities;
+using WebApp2.Models; // Uppdatera med korrekt namespace för UserEntity
 
 public class AccountsController : Controller
 {
-    //private readonly AccountService _accountService;
+    private readonly UserManager<UserEntity> _userManager;
 
-    //public AccountsController(AccountService accountService)
-    //{
-    //    _accountService = accountService;
-    //}
+    public AccountsController(UserManager<UserEntity> userManager)
+    {
+        _userManager = userManager;
+    }
 
     [Route("/account")]
-	public IActionResult Details()
-	{
-		var viewModel = new AccountDetailsViewModel();
-		//model.BasicInfo = _accountService.GetBasicInfo();
-		//model.AddressInfo = _accountService.GetBasicInfo();
-		return View(viewModel);
-	}
+    public async Task<IActionResult> Details()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) return RedirectToAction("Login", "Accounts"); // Eller hantera detta på annat sätt
 
-	[HttpPost]
+        var viewModel = new AccountDetailsViewModel
+        {
+            BasicInfo = new AccountDetailsBasicInfoModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Phone!, // Antagande att detta är hur du lagrar telefonnumret i UserEntity
+                // Lägg till fler fält här efter behov
+            },
+            // Antag att AddressInfo ska fyllas på liknande sätt
+            AddressInfo = new AccountDetailsAddressInfoModel
+            {
+                // Fyll i med data från user om tillgängligt
+                // Exempel:
+                // Addressline_1 = user.Address?.Line1,
+                // City = user.Address?.City,
+                // PostalCode = user.Address?.PostalCode,
+                // Lägg till fler fält här efter behov
+            }
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
     public IActionResult BasicInfo(AccountDetailsBasicInfoModel model)
-    { 
-		//_accountService.SaveBasicInfo(model.BasicInfo);
+    {
+        // Implementera logik för att spara basinfo
         return RedirectToAction("Details");
     }
 
-	[HttpPost]
-	public IActionResult AddressInfo(AccountDetailsAddressInfoModel model)
-	{
-		//_accountService.SaveAddressInfo(model.AddressInfo);
-		return RedirectToAction("Details");
-	}
+    [HttpPost]
+    public IActionResult AddressInfo(AccountDetailsAddressInfoModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Logik för att spara adressinformation här
+            // Antagligen vill du spara denna information för den inloggade användaren
+
+            return RedirectToAction("Details");
+        }
+
+        // Om modellen inte är giltig, returnera samma vy med modellen för att visa valideringsfel
+        return View("Details", model); // Eller hantera detta annorlunda beroende på din logik
+    }
+
 }
+
 
 
 /*

@@ -1,36 +1,61 @@
 using Infrastructure.Contexts;
+using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Lägg till stöd för kontroller och vyer
 builder.Services.AddControllersWithViews();
 
+// Konfigurera databaskontexten för att använda SQL Server
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+
+// Uppdatera från IdentityUser till din anpassade UserEntity
+builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<DataContext>();
 
 
-
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+// Registrera dina repositories
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<FeatureRepository>();
 builder.Services.AddScoped<FeatureItemRepository>();
 
+// Registrera dina tjänster
 builder.Services.AddScoped<AddressService>();
-builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<FeatureService>();
 
 var app = builder.Build();
-app.UseHsts();
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthorization();
-app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Konfigurera HTTP Strict Transport Security Protocol
+app.UseHsts();
+
+// Konfigurera HTTPS-omdirigering
+app.UseHttpsRedirection();
+
+// Aktivera tjänst för statiska filer
+app.UseStaticFiles();
+
+// Aktivera routing
+app.UseRouting();
+
+// Aktivera autentisering och auktorisering
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Konfigurera standardrutten
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Starta applikationen
 app.Run();
+
 
 
 

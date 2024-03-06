@@ -19,7 +19,7 @@ public class HomeIndexViewModel
 			Features.Title = content.Title;
 			Features.Ingress = content.Ingress;
 
-			foreach(var item in content.FeatureItems)
+			foreach (var item in content.FeatureItems)
 				Features.FeatureItems.Add(item);
 		});
 

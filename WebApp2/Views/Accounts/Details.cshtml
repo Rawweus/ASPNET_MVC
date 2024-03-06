@@ -14,14 +14,14 @@
 
 
 			<nav>
-				<a class="btn-theme-s" asp-controller="Account" asp-action="Details">Account Details</a>
-				<a class="btn-switch" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+				<a class="btn-theme-s" asp-controller="Accounts" asp-action="Details">Account Details</a>
+				<a class="btn-switch" asp-controller="Accounts" asp-action="SignOut">Sign Out</a>
 			</nav>
 		</aside>
 
 		<div class="details">
 			<section class="basic-info">
-				<form method="post" asp-controller="Account" asp-action="BasicInfo">
+				<form method="post" asp-controller="Accounts" asp-action="BasicInfo">
 					<h2>Account Details</h2>
 					<h5>Basic Info</h5>
 
@@ -63,7 +63,7 @@
 			</section>
 			<hr />
 			<section class="address-info">
-				<form method="post" asp-controller="Account" asp-action="AddressInfo">
+				<form method="post" asp-controller="Accounts" asp-action="AddressInfo">
 					<h5>Address</h5>
 
 					<div class="content">
