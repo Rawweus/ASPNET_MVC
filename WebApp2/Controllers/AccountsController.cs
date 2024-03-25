@@ -3,16 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebApp2.ViewModels; // Uppdatera med korrekt namespace för din ViewModel
 using Infrastructure.Entities;
-using WebApp2.Models; // Uppdatera med korrekt namespace för UserEntity
+using WebApp2.Models;
+using Infrastructure.Repositories; // Uppdatera med korrekt namespace för UserEntity
+using Infrastructure.Models;
 
-public class AccountsController : Controller
+public class AccountsController(UserManager<UserEntity> userManager, UserRepository userRepository) : Controller
 {
-    private readonly UserManager<UserEntity> _userManager;
+    private readonly UserManager<UserEntity> _userManager = userManager;
+    private readonly UserRepository _userRepository = userRepository;
 
-    public AccountsController(UserManager<UserEntity> userManager)
-    {
-        _userManager = userManager;
-    }
 
     [Route("/account")]
     public async Task<IActionResult> Details()
@@ -46,10 +45,39 @@ public class AccountsController : Controller
     }
 
     [HttpPost]
-    public IActionResult BasicInfo(AccountDetailsBasicInfoModel model)
+    public async Task<IActionResult> BasicInfo(AccountDetailsBasicInfoModel model)
     {
-        // Implementera logik för att spara basinfo
-        return RedirectToAction("Details");
+		if (User?.Identity?.IsAuthenticated != true)
+		{
+			return RedirectToAction("Login", "Auth");
+		}
+
+		if (ModelState.IsValid)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Accounts");
+            }
+
+			var result = await _userRepository.UpdateUserBasicInfo(user.Id, model.Phone, model.Biography);
+            if (result.StatusCode == MyStatusCode.OK)
+            {
+                return RedirectToAction("Details");
+            }
+
+            ModelState.AddModelError("", result.Message);
+        }
+
+        // Om det fanns valideringsfel eller andra problem, skapa en ny AccountDetailsViewModel och återgå till vyn
+        var viewModel = new AccountDetailsViewModel
+        {
+            BasicInfo = model, // Sätt model som BasicInfo
+            AddressInfo = new AccountDetailsAddressInfoModel() // Skapa en ny AddressInfo, om det behövs hämta existerande data
+                                                               // Andra egenskaper som behövs av din vy...
+        };
+
+        return View("Details", viewModel); // Se till att du skickar en AccountDetailsViewModel
     }
 
     [HttpPost]

@@ -6,11 +6,9 @@ using WebApp2.Models;
 
 namespace WebApp2.Controllers
 {
-    public class AccountController(UserService userService) : Controller
+    public class AuthController(UserService userService) : Controller
     {
         private readonly UserService _userService = userService;
-
-
 
 		[HttpGet]
         [Route("/signup")]
@@ -26,9 +24,9 @@ namespace WebApp2.Controllers
         {
             if (ModelState.IsValid)
             {
-				var result = await _userService.CreateUserAsync(model); // Hans tog (viewModel.Form som jag inte har)
-				if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
-					return RedirectToAction("SignIn", "Account");
+				var result = await _userService.CreateUserAsync(model);
+				if (result.StatusCode == Infrastructure.Models.MyStatusCode.OK)
+					return RedirectToAction("SignIn", "Auth");
 			}
             return View(model);
         }
@@ -50,7 +48,7 @@ namespace WebApp2.Controllers
 			if (ModelState.IsValid)
 			{
 				var result = await _userService.SignInUserAsync(model); // Använd direkt model eftersom du inte har viewModel.Form
-				if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+				if (result.StatusCode == Infrastructure.Models.MyStatusCode.OK)
 					return RedirectToAction("Details", "Accounts");
 			}
 

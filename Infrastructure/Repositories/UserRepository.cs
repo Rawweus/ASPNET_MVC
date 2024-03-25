@@ -43,6 +43,29 @@ public class UserRepository(DataContext context) : Repo<UserEntity>(context)
 			return ResponseFactory.Error(ex.Message);
 		}
 	}
+
+    public async Task<ResponseResult> UpdateUserBasicInfo(string userId, string phone, string bio)
+    {
+        try
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return ResponseFactory.NotFound();
+            }
+
+            user.PhoneNumber = phone ?? user.PhoneNumber;
+			user.Bio = bio ?? user.Bio;
+
+            await _context.SaveChangesAsync();
+            return ResponseFactory.Ok(user);
+        }
+        catch (Exception ex)
+        {
+            return ResponseFactory.Error(ex.Message);
+        }
+    }
+
 }
 
 

@@ -9,7 +9,7 @@ public class ResponseFactory
 		return new ResponseResult
 		{
 			Message = "Succeeded",
-			StatusCode = StatusCode.OK
+			StatusCode = MyStatusCode.OK
 		};
 	}
 
@@ -18,7 +18,7 @@ public class ResponseFactory
 		return new ResponseResult
 		{
 			Message = message ?? "Succeeded",
-			StatusCode = StatusCode.OK
+			StatusCode = MyStatusCode.OK
 		};
 	}
 
@@ -29,7 +29,7 @@ public class ResponseFactory
 		{
 			ContentResult = obj,
 			Message = message ?? "Succeeded",
-			StatusCode = StatusCode.OK
+			StatusCode = MyStatusCode.OK
 		};
 	}
 
@@ -38,7 +38,7 @@ public class ResponseFactory
 		return new ResponseResult
 		{
 			Message = message ?? "Failed",
-			StatusCode = StatusCode.ERROR
+			StatusCode = MyStatusCode.ERROR
 		};
 	}
 
@@ -47,7 +47,7 @@ public class ResponseFactory
 		return new ResponseResult
 		{
 			Message = message ?? "Not found",
-			StatusCode = StatusCode.NOT_FOUND
+			StatusCode = MyStatusCode.NOT_FOUND
 		};
 	}
 
@@ -56,7 +56,7 @@ public class ResponseFactory
 		return new ResponseResult
 		{
 			Message = message ?? "Already exists",
-			StatusCode = StatusCode.EXISTS
+			StatusCode = MyStatusCode.EXISTS
 		};
 	}
 }

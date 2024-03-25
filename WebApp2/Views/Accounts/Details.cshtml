@@ -51,9 +51,11 @@
 						</div>
 
 						<div id="form-bio" class="input-group">
-							<label>Bio <span>(optional)</span></label>
-<textarea name="bio" placeholder="Add a short bio..."></textarea>
+							<label asp-for="BasicInfo.Biography"></label>
+							<span asp-validation-for="BasicInfo.Biography"></span>
+							<textarea asp-for="BasicInfo.Biography" placeholder="Add a short bio..."></textarea>
 						</div>
+
 						<div class="form-buttons">
 							<button class="btn-gray" type="reset">Cancel</button>
 							<button class="btn-theme" type="submit">Save changes</button>

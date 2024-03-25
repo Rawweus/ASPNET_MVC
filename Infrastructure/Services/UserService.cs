@@ -68,6 +68,34 @@ namespace Infrastructure.Services
                 return ResponseFactory.Error("Incorrect email or password.");
             }
         }
+
+        public async Task<ResponseResult> UpdateUserAsync(string userId, string phone, string bio)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return ResponseFactory.Error("User not found.");
+            }
+
+            // Uppdatera fälten om de inte är null eller tomma.
+            if (!string.IsNullOrWhiteSpace(phone))
+            {
+                user.PhoneNumber = phone;
+            }
+            if (!string.IsNullOrWhiteSpace(bio))
+            {
+                user.Bio = bio;
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return ResponseFactory.Ok("User information updated successfully.");
+            }
+
+            return ResponseFactory.Error(string.Join(";", result.Errors.Select(e => e.Description)));
+        }
+
     }
 }
 

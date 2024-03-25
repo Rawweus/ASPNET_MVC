@@ -14,7 +14,7 @@ public class AddressService(AddressRepository repository)
 		try
 		{
 			var result = await GetAddressAsync(streetName, postalCode, city);
-			if (result.StatusCode == StatusCode.NOT_FOUND)
+			if (result.StatusCode == MyStatusCode.NOT_FOUND)
 				result = await CreateAddressAsync(streetName, postalCode, city);
 
 			return result;
@@ -30,7 +30,7 @@ public class AddressService(AddressRepository repository)
 			if (exists == null)
 			{
 				var result = await _repository.CreateOneAsync(AddressFactory.Create(streetName, postalCode, city));
-				if (result.StatusCode == StatusCode.OK)
+				if (result.StatusCode == MyStatusCode.OK)
 					return ResponseFactory.Ok(AddressFactory.Create((AddressEntity)result.ContentResult!));
 
 				return result;
