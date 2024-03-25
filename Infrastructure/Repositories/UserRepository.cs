@@ -54,7 +54,7 @@ public class UserRepository(DataContext context) : Repo<UserEntity>(context)
                 return ResponseFactory.NotFound();
             }
 
-            user.PhoneNumber = phone ?? user.PhoneNumber;
+            user.Phone = phone ?? user.Phone;
 			user.Bio = bio ?? user.Bio;
 
             await _context.SaveChangesAsync();

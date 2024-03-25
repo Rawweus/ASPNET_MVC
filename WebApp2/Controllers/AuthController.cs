@@ -47,7 +47,7 @@ namespace WebApp2.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var result = await _userService.SignInUserAsync(model); // Använd direkt model eftersom du inte har viewModel.Form
+				var result = await _userService.SignInUserAsync(model);
 				if (result.StatusCode == Infrastructure.Models.MyStatusCode.OK)
 					return RedirectToAction("Details", "Accounts");
 			}

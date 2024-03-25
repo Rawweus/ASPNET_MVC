@@ -80,7 +80,7 @@ namespace Infrastructure.Services
             // Uppdatera fälten om de inte är null eller tomma.
             if (!string.IsNullOrWhiteSpace(phone))
             {
-                user.PhoneNumber = phone;
+                user.Phone = phone;
             }
             if (!string.IsNullOrWhiteSpace(bio))
             {
