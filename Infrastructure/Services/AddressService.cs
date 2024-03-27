@@ -5,52 +5,85 @@ using Infrastructure.Repositories;
 
 namespace Infrastructure.Services;
 
-public class AddressService(AddressRepository repository)
+public class AddressService
 {
-	private readonly AddressRepository _repository = repository;
+	private readonly AddressRepository _addressRepository;
 
-	public async Task<ResponseResult> GetOrCreateAddressAsync(string streetName, string postalCode, string city)
+	public AddressService(AddressRepository addressRepository)
 	{
-		try
-		{
-			var result = await GetAddressAsync(streetName, postalCode, city);
-			if (result.StatusCode == MyStatusCode.NOT_FOUND)
-				result = await CreateAddressAsync(streetName, postalCode, city);
-
-			return result;
-		}
-		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+		_addressRepository = addressRepository;
 	}
 
-	public async Task<ResponseResult> CreateAddressAsync(string streetName, string postalCode, string city)
+	public async Task<ResponseResult> GetOrCreateAddressAsync(string addressLine1, string addressLine2, string postalCode, string city)
 	{
 		try
 		{
-			var exists = await _repository.AlreadyExistsAsync(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
-			if (exists == null)
+			var address = await _addressRepository.GetAsync(addressLine1, addressLine2, postalCode, city);
+			if (address == null)
 			{
-				var result = await _repository.CreateOneAsync(AddressFactory.Create(streetName, postalCode, city));
-				if (result.StatusCode == MyStatusCode.OK)
-					return ResponseFactory.Ok(AddressFactory.Create((AddressEntity)result.ContentResult!));
-
-				return result;
+				address = new AddressEntity { AddressLine1 = addressLine1, AddressLine2 = addressLine2, PostalCode = postalCode, City = city };
+				address = await _addressRepository.AddAsync(address);
+				return ResponseFactory.Ok(address);
 			}
-
-			return exists;
+			return ResponseFactory.Exists("Adressen finns redan.");
 		}
-		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+		catch (Exception ex)
+		{
+			return ResponseFactory.Error(ex.Message);
+		}
 	}
 
-	public async Task<ResponseResult> GetAddressAsync(string streetName, string postalCode, string city)
+	public async Task<ResponseResult> CreateAddressAsync(string addressLine1, string addressLine2, string postalCode, string city)
 	{
 		try
 		{
-			var result = await _repository.GetOneAsync(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
+			// Använd _addressRepository för att kontrollera om en adress redan finns
+			bool exists = await _addressRepository.AlreadyExistsAsync(a => a.AddressLine1 == addressLine1 && a.AddressLine2 == addressLine2 && a.PostalCode == postalCode && a.City == city);
+
+			if (!exists)
+			{
+				// Om adressen inte finns, skapa en ny
+				AddressEntity newAddress = new AddressEntity
+				{
+					AddressLine1 = addressLine1,
+					AddressLine2 = addressLine2,
+					PostalCode = postalCode,
+					City = city
+				};
+				newAddress = await _addressRepository.AddAsync(newAddress);
+
+				return ResponseFactory.Ok(newAddress); // Antag att detta skapar ett ResponseResult objekt med OK-status och den nya adressen
+			}
+			else
+			{
+				return ResponseFactory.Exists("Adressen finns redan."); // Antag att detta skapar ett ResponseResult objekt med Exists-status
+			}
+		}
+		catch (Exception ex)
+		{
+			return ResponseFactory.Error(ex.Message); // Antag att detta skapar ett ResponseResult objekt med Error-status
+		}
+	}
+
+	public async Task<ResponseResult> GetAddressAsync(string addressLine1, string addressLine2, string postalCode, string city)
+	{
+		try
+		{
+			var result = await _addressRepository.GetOneAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.PostalCode == postalCode && x.City == city);
 			return result;
 		}
 		catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
 	}
 }
+
+
+
+
+
+
+
+
+
 
 /*
 `AddressService` använder `AddressRepository` för att hantera adressrelaterade 

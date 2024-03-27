@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Infrastructure.Entities;
 
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class UserEntity : IdentityUser
 {
@@ -15,9 +16,10 @@ public class UserEntity : IdentityUser
     public DateTime? Created { get; set; }
     public DateTime? Modified { get; set; }
 
-    // AddressId och Address definieras här om du vill behålla en relation mellan användare och adresser
-    public int? AddressId { get; set; }
-    public AddressEntity? Address { get; set; }
+	// AddressId och Address definieras här om du vill behålla en relation mellan användare och adresser
+	[ForeignKey("Address")]
+	public int? AddressId { get; set; }
+	public virtual AddressEntity? Address { get; set; }
 }
 
 

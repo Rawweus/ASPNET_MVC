@@ -1,47 +1,55 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using WebApp2.ViewModels; // Uppdatera med korrekt namespace för din ViewModel
+﻿using Infrastructure.Contexts;
 using Infrastructure.Entities;
-using WebApp2.Models;
-using Infrastructure.Repositories; // Uppdatera med korrekt namespace för UserEntity
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Repositories;
 using Infrastructure.Models;
+using WebApp2.Models;
+using WebApp2.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
-public class AccountsController(UserManager<UserEntity> userManager, UserRepository userRepository) : Controller
+public class AccountsController : Controller
 {
-    private readonly UserManager<UserEntity> _userManager = userManager;
-    private readonly UserRepository _userRepository = userRepository;
+	private readonly UserManager<UserEntity> _userManager;
+	private readonly UserRepository _userRepository;
+	private readonly DataContext _context; // Din DataContext
 
+	public AccountsController(UserManager<UserEntity> userManager, UserRepository userRepository, DataContext context)
+	{
+		_userManager = userManager;
+		_userRepository = userRepository;
+		_context = context;
+	}
 
-    [Route("/account")]
-    public async Task<IActionResult> Details()
-    {
-        var user = await _userManager.GetUserAsync(User);
-        if (user == null) return RedirectToAction("SignIn", "Auth"); // Eller hantera detta på annat sätt
+	[Route("/account")]
+	public async Task<IActionResult> Details()
+	{
+		var user = await _userManager.GetUserAsync(User);
+		if (user == null) return RedirectToAction("SignIn", "Auth");
 
-        var viewModel = new AccountDetailsViewModel
-        {
-            BasicInfo = new AccountDetailsBasicInfoModel
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Phone = user.Phone,
-            },
-            // Antag att AddressInfo ska fyllas på liknande sätt
-            AddressInfo = new AccountDetailsAddressInfoModel
-            {
-                // Fyll i med data från user om tillgängligt
-                // Exempel:
-                // Addressline_1 = user.Address?.Line1,
-                // City = user.Address?.City,
-                // PostalCode = user.Address?.PostalCode,
-                // Lägg till fler fält här efter behov
-            }
-        };
+		var userAddress = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == user.AddressId);
 
-        return View(viewModel);
-    }
+		var viewModel = new AccountDetailsViewModel
+		{
+			BasicInfo = new AccountDetailsBasicInfoModel
+			{
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Email = user.Email,
+				Phone = user.Phone,
+				Biography = user.Bio,
+			},
+			AddressInfo = userAddress != null ? new AccountDetailsAddressInfoModel
+			{
+				AddressLine_1 = userAddress.AddressLine1,
+				AddressLine_2 = userAddress.AddressLine2,
+				PostalCode = userAddress.PostalCode,
+				City = userAddress.City,
+			} : new AccountDetailsAddressInfoModel()
+		};
+
+		return View(viewModel);
+	}
 
 	[HttpPost]
 	public async Task<IActionResult> BasicInfo(AccountDetailsViewModel model)
@@ -59,7 +67,6 @@ public class AccountsController(UserManager<UserEntity> userManager, UserReposit
 				return RedirectToAction("SignIn", "Auth");
 			}
 
-			// Anpassning här: model.BasicInfo.Phone och model.BasicInfo.Biography
 			var result = await _userRepository.UpdateUserBasicInfo(user.Id, model.BasicInfo.Phone, model.BasicInfo.Biography);
 			if (result.StatusCode == MyStatusCode.OK)
 			{
@@ -69,28 +76,54 @@ public class AccountsController(UserManager<UserEntity> userManager, UserReposit
 			ModelState.AddModelError("", result.Message);
 		}
 
-		// Ingen ändring behövs här, men se till att skicka tillbaka samma model till vyn om det finns valideringsfel
-		// Du behöver inte skapa en ny AccountDetailsViewModel eftersom "model" redan är en AccountDetailsViewModel
 		return View("Details", model);
 	}
 
-
 	[HttpPost]
-    public IActionResult AddressInfo(AccountDetailsAddressInfoModel model)
-    {
-        if (ModelState.IsValid)
-        {
-            // Logik för att spara adressinformation här
-            // Antagligen vill du spara denna information för den inloggade användaren
+	public async Task<IActionResult> AddressInfo(AccountDetailsViewModel model)
+	{
+		if (ModelState.IsValid)
+		{
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				return RedirectToAction("SignIn", "Auth");
+			}
 
-            return RedirectToAction("Details");
-        }
+			AddressEntity address = null;
 
-        // Om modellen inte är giltig, returnera samma vy med modellen för att visa valideringsfel
-        return View("Details", model); // Eller hantera detta annorlunda beroende på din logik
-    }
+			if (user.AddressId.HasValue)
+			{
+				address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == user.AddressId.Value);
+			}
 
+			if (address == null)
+			{
+				address = new AddressEntity();
+				_context.Addresses.Add(address);
+			}
+
+			address.AddressLine1 = model.AddressInfo.AddressLine_1;
+			address.AddressLine2 = model.AddressInfo.AddressLine_2;
+			address.PostalCode = model.AddressInfo.PostalCode;
+			address.City = model.AddressInfo.City;
+
+			await _context.SaveChangesAsync();
+
+			if (!user.AddressId.HasValue)
+			{
+				user.AddressId = address.Id;
+				await _userManager.UpdateAsync(user);
+			}
+
+			return RedirectToAction("Details");
+		}
+
+		return RedirectToAction("Details", model);
+	}
 }
+
+
 
 
 

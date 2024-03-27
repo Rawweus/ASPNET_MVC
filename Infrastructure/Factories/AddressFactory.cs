@@ -16,37 +16,42 @@ public class AddressFactory
 		return null!;
 	}
 
-	public static AddressEntity Create(string streetName, string postalCode, string city)
+	public static AddressEntity Create(string addressLine1, string addressLine2, string postalCode, string city)
 	{
-		try
 		{
-			return new AddressEntity
+			try
 			{
-				StreetName = streetName,
-				PostalCode = postalCode,
-				City = city
-			};
+				return new AddressEntity
+				{
+					AddressLine1 = addressLine1,
+					AddressLine2 = addressLine2,
+					PostalCode = postalCode,
+					City = city
+				};
+			}
+			catch { }
+			return null!;
 		}
-		catch { }
-		return null!;
 	}
 
-	public static AddressModel Create(AddressEntity entity)
-	{
-		try
+		public static AddressModel Create(AddressEntity entity)
 		{
-			return new AddressModel
+			try
 			{
-				Id = entity.Id,
-				StreetName = entity.StreetName,
-				PostalCode = entity.PostalCode,
-				City = entity.City
-			};
+				return new AddressModel
+				{
+					Id = entity.Id,
+					AddressLine1 = entity.AddressLine1,
+					AddressLine2 = entity.AddressLine2,
+					PostalCode = entity.PostalCode,
+					City = entity.City
+				};
+			}
+			catch { }
+			return null!;
 		}
-		catch { }
-		return null!;
+
 	}
-}
 
 
 /* `AddressFactory.cs` ligger i `Factories`-mappen i `Infrastructure`-projektet.

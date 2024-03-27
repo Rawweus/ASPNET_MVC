@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Entities;
+using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,12 +7,20 @@ using WebApp2.Models;
 
 namespace WebApp2.Controllers
 {
-    public class AuthController(UserService userService) : Controller
-    {
-        private readonly UserService _userService = userService;
+	public class AuthController : Controller
+	{
+		private readonly UserService _userService;
+		private readonly SignInManager<UserEntity> _signInManager; // Lägg till SignInManager
+
+		// Uppdatera konstruktören för att inkludera SignInManager
+		public AuthController(UserService userService, SignInManager<UserEntity> signInManager)
+		{
+			_userService = userService;
+			_signInManager = signInManager; // Initiera _signInManager
+		}
 
 		[HttpGet]
-        [Route("/signup")]
+		[Route("/signup")]
 		public IActionResult SignUp()
 		{
 			var model = new SignUpModel();
@@ -21,25 +30,23 @@ namespace WebApp2.Controllers
 		[HttpPost]
 		[Route("/signup")]
 		public async Task<IActionResult> SignUp(SignUpModel model)
-        {
-            if (ModelState.IsValid)
-            {
+		{
+			if (ModelState.IsValid)
+			{
 				var result = await _userService.CreateUserAsync(model);
-				if (result.StatusCode == Infrastructure.Models.MyStatusCode.OK)
+				if (result.StatusCode == MyStatusCode.OK)
 					return RedirectToAction("SignIn", "Auth");
 			}
-            return View(model);
-        }
+			return View(model);
+		}
 
 		[HttpGet]
 		[Route("/signin")]
-        public IActionResult SignIn()
-        {
-            var model = new SignInModel();
-            return View(model);
-        }
-
-
+		public IActionResult SignIn()
+		{
+			var model = new SignInModel();
+			return View(model);
+		}
 
 		[HttpPost]
 		[Route("/signin")]
@@ -48,15 +55,24 @@ namespace WebApp2.Controllers
 			if (ModelState.IsValid)
 			{
 				var result = await _userService.SignInUserAsync(model);
-				if (result.StatusCode == Infrastructure.Models.MyStatusCode.OK)
+				if (result.StatusCode == MyStatusCode.OK)
 					return RedirectToAction("Details", "Accounts");
 			}
 
 			ModelState.AddModelError(string.Empty, "Incorrect email or password.");
 			return View(model);
 		}
-    }
+
+		[HttpPost]
+		[Route("/signout")]
+		public async Task<IActionResult> SignOut()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home"); // Eller vart du nu vill dirigera användaren efter utloggning
+		}
+	}
 }
+
 
 
 /*

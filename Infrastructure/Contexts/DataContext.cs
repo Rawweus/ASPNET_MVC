@@ -7,22 +7,28 @@ namespace Infrastructure.Contexts;
 // Ändra basen till IdentityDbContext för att inkludera stöd för Identity
 public class DataContext : IdentityDbContext<UserEntity>
 {
-    public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
-    {
-    }
+	public DataContext(DbContextOptions<DataContext> options)
+		: base(options)
+	{
+	}
 
-    // Behåll dina befintliga DbSet-deklarationer
-    public DbSet<AddressEntity> Addresses { get; set; }
-    public DbSet<FeatureEntity> Features { get; set; }
-    public DbSet<FeatureItemEntity> FeatureItems { get; set; } // Mindre ändring i namnet för konsistens
+	// Behåll dina befintliga DbSet-deklarationer
+	public DbSet<AddressEntity> Addresses { get; set; }
+	public DbSet<FeatureEntity> Features { get; set; }
+	public DbSet<FeatureItemEntity> FeatureItems { get; set; }
 
-    // Övriga konfigurationer och metodöverlagringar vid behov
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-    }
+	// Övriga konfigurationer och metodöverlagringar vid behov
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		base.OnModelCreating(builder);
 
+		// Konfigurera en-till-en-relationen mellan UserEntity och AddressEntity
+		builder.Entity<UserEntity>()
+			.HasOne(u => u.Address) // UserEntity har en Address
+			.WithOne() // AddressEntity har en eller ingen UserEntity
+			.HasForeignKey<UserEntity>(u => u.AddressId) // AddressId i UserEntity är ForeignKey
+			.IsRequired(false); // Gör detta om adressen är valfri
+	}
 }
 
 

@@ -4,8 +4,8 @@ namespace WebApp2.ViewModels
 {
 	public class AccountDetailsViewModel
 	{
-		public AccountDetailsBasicInfoModel BasicInfo { get; set; } = null!;
-		public AccountDetailsAddressInfoModel AddressInfo { get; set; } = null!;
+		public AccountDetailsBasicInfoModel? BasicInfo { get; set; }
+		public AccountDetailsAddressInfoModel? AddressInfo { get; set; }
 	}
 }
 

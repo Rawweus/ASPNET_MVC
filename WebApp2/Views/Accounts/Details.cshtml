@@ -8,15 +8,19 @@
 		<aside>
 			<div class="profile-info">
 				<img src="~/images/profile-image.svg" />
-				<h5>Förnamn Efternamn</h5>
-				<p>mejl@AppDomain.com</p>
+				<h5>@Model.BasicInfo.FirstName @Model.BasicInfo.LastName</h5>
+				<p>@Model.BasicInfo.Email</p>
 			</div>
 
 
-			<nav>
-				<a class="btn-theme-s" asp-controller="Accounts" asp-action="Details">Account Details</a>
-				<a class="btn-switch" asp-controller="Accounts" asp-action="SignOut">Sign Out</a>
-			</nav>
+<nav>
+    <a class="btn-theme-s" asp-controller="Accounts" asp-action="Details">Account Details</a>
+    <!-- Använd ett formulär för att skicka en POST-begäran för utloggning -->
+    <form asp-controller="Auth" asp-action="SignOut" method="post" style="display: inline;">
+        <button type="submit" class="btn-gray">Sign Out</button>
+    </form>
+</nav>
+
 		</aside>
 
 		<div class="details">
@@ -70,15 +74,15 @@
 
 					<div class="content">
 						<div id="form-addressline-1" class="input-group">
-							<label asp-for="AddressInfo.Addressline_1"></label>
-							<span asp-validation-for="AddressInfo.Addressline_1"></span>
-							<input asp-for="AddressInfo.Addressline_1" />
+							<label asp-for="AddressInfo.AddressLine_1"></label>
+							<span asp-validation-for="AddressInfo.AddressLine_1"></span>
+							<input asp-for="AddressInfo.AddressLine_1" />
 						</div>
 
 						<div id="form-addressline-2" class="input-group">
-							<label asp-for="AddressInfo.Addressline_2"></label>
-							<span asp-validation-for="AddressInfo.Addressline_2"></span>
-							<input asp-for="AddressInfo.Addressline_2" />
+							<label asp-for="AddressInfo.AddressLine_2"></label>
+							<span asp-validation-for="AddressInfo.AddressLine_2"></span>
+							<input asp-for="AddressInfo.AddressLine_2" />
 						</div>
 
 						<div id="form-postalcode" class="input-group">
