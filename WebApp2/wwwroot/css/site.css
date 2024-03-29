@@ -337,6 +337,8 @@ input.focus {
   background: #6366F1;
   color: #FFFFFF;
   border: none;
+  min-width: 160px;
+  max-height: 50px;
 }
 .btn-theme:hover {
   text-decoration: none;
@@ -378,6 +380,7 @@ input.focus {
   background: #EFF2FC;
   color: #33354D;
   border: none;
+  min-width: 160px;
 }
 .btn-gray:hover {
   text-decoration: none;

@@ -10,43 +10,62 @@ namespace WebApp2.Controllers
 	public class AuthController : Controller
 	{
 		private readonly UserService _userService;
-		private readonly SignInManager<UserEntity> _signInManager; // Lägg till SignInManager
+		private readonly SignInManager<UserEntity> _signInManager;
 
-		// Uppdatera konstruktören för att inkludera SignInManager
 		public AuthController(UserService userService, SignInManager<UserEntity> signInManager)
 		{
 			_userService = userService;
-			_signInManager = signInManager; // Initiera _signInManager
+			_signInManager = signInManager; 
 		}
 
-		[HttpGet]
-		[Route("/signup")]
-		public IActionResult SignUp()
-		{
-			var model = new SignUpModel();
-			return View(model);
-		}
+        [HttpGet]
+        [Route("/signup")]
+        public IActionResult SignUp()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+            }
 
-		[HttpPost]
-		[Route("/signup")]
-		public async Task<IActionResult> SignUp(SignUpModel model)
-		{
-			if (ModelState.IsValid)
-			{
-				var result = await _userService.CreateUserAsync(model);
-				if (result.StatusCode == MyStatusCode.OK)
-					return RedirectToAction("SignIn", "Auth");
-			}
-			return View(model);
-		}
+            return View(new SignUpModel());
+        }
 
-		[HttpGet]
-		[Route("/signin")]
-		public IActionResult SignIn()
-		{
-			var model = new SignInModel();
-			return View(model);
-		}
+
+        [HttpPost]
+        [Route("/signup")]
+        public async Task<IActionResult> SignUp(SignUpModel model)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Details", "Accounts");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateUserAsync(model);
+                if (result.StatusCode == MyStatusCode.OK)
+                {
+                    return RedirectToAction("SignIn", "Auth");
+                }
+            }
+            return View(model);
+        }
+
+
+        [HttpGet]
+        [Route("/signin")]
+        public IActionResult SignIn()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+            }
+
+            return View(new SignInModel());
+        }
+
+
+
 
 		[HttpPost]
 		[Route("/signin")]
@@ -56,8 +75,8 @@ namespace WebApp2.Controllers
 			{
 				var result = await _userService.SignInUserAsync(model);
 				if (result.StatusCode == MyStatusCode.OK)
-					return RedirectToAction("Details", "Accounts");
-			}
+                    return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+            }
 
 			ModelState.AddModelError(string.Empty, "Incorrect email or password.");
 			return View(model);
@@ -65,7 +84,7 @@ namespace WebApp2.Controllers
 
 		[HttpPost]
 		[Route("/signout")]
-		public async Task<IActionResult> SignOut()
+		public new async Task<IActionResult> SignOut()
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home"); // Eller vart du nu vill dirigera användaren efter utloggning

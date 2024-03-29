@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<UserEntity> _signInManager
+
+<!DOCTYPE html>
 <html lang="sv-se">
 <head>
     <meta charset="UTF-8" />
@@ -28,6 +30,10 @@
                     <nav>
                         <a class="menu-link" asp-controller="Home" asp-action="Index" asp-fragment="overview">Overview</a>
                         <a class="menu-link" asp-controller="Home" asp-action="Index" asp-fragment="features">Features</a>
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <a asp-action="Index" class="menu-link" asp-controller="Courses">Courses</a>
+                        }
                         <a class="menu-link" href="#contact.html">Contact</a>
                     </nav>
                 </div>
@@ -42,10 +48,26 @@
                 </div>
 
                 <div class="account-buttons">
-                    <a class="btn-gray" asp-controller="Auth" asp-action="SignIn"> <i class="fa-regular fa-right-to-bracket"></i><span>Sign in</span></a>
-                    <a class="btn-theme" asp-controller="Auth" asp-action="SignUp"><i class="fa-regular fa-user"></i><span>Sign up</span></a>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <form asp-action="SignOut" asp-controller="Auth" method="post" style="display: inline;">
+                            <button type="submit" class="btn-gray">
+                                <i class="fa-regular fa-right-from-bracket"></i><span>Sign out</span>
+                            </button>
+                            
+                        </form>
+                        <form asp-action="Details" asp-controller="Accounts" method="get" style="display: inline;">
+                            <button type="submit" class="btn-theme">
+                                <i class="fa-regular fa-user"></i><span>My Account</span>
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="btn-gray" asp-controller="Auth" asp-action="SignIn"><i class="fa-regular fa-right-to-bracket"></i><span>Sign in</span></a>
+                        <a class="btn-theme" asp-controller="Auth" asp-action="SignUp"><i class="fa-regular fa-user"></i><span>Sign up</span></a>
+                    }
                 </div>
-
 
             </div>
         </header>

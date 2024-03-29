@@ -39,7 +39,6 @@ namespace Infrastructure.Services
                 if (result.Succeeded)
                 {
                     
-                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return ResponseFactory.Ok("User was created successfully.");
                 }
 

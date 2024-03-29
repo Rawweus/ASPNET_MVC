@@ -32,6 +32,8 @@ builder.Services.AddScoped<FeatureService>();
 
 var app = builder.Build();
 
+//app.UseStatusCodePagesWithReExecute("/error", "statusCode={0}");
+
 // Konfigurera HTTP Strict Transport Security Protocol
 app.UseHsts();
 

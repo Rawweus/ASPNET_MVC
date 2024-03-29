@@ -70,7 +70,7 @@ public class AccountsController : Controller
 			var result = await _userRepository.UpdateUserBasicInfo(user.Id, model.BasicInfo.Phone, model.BasicInfo.Biography);
 			if (result.StatusCode == MyStatusCode.OK)
 			{
-				return RedirectToAction("Details");
+				return RedirectToAction("Details", "Accounts");
 			}
 
 			ModelState.AddModelError("", result.Message);
@@ -116,7 +116,7 @@ public class AccountsController : Controller
 				await _userManager.UpdateAsync(user);
 			}
 
-			return RedirectToAction("Details");
+			return RedirectToAction("Details", "Accounts");
 		}
 
 		return RedirectToAction("Details", model);
