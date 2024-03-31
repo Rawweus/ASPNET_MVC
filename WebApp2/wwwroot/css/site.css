@@ -764,6 +764,137 @@ header .container .btn-mobile {
   color: #565973;
 }
 
+#subscribe {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background: #F3F6FF;
+}
+#subscribe .form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50rem;
+  text-align: left;
+  gap: 10px;
+}
+#subscribe .subsribe-header {
+  text-align: center;
+}
+#subscribe .subsribe-header h1 .text-lg {
+  color: #9397ad;
+}
+#subscribe .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+#subscribe .newsletter-signup, #subscribe .subscriptions, #subscribe .email-input, #subscribe p {
+  text-align: center;
+  margin-top: 10px;
+}
+#subscribe .email-input {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 3rem;
+}
+#subscribe .email-input input[type=email] {
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#subscribe .btn-theme-s {
+  margin-left: 10px;
+  border: none;
+}
+#subscribe p {
+  font-size: 0.8rem;
+}
+#subscribe .terms-text {
+  margin-right: auto;
+  width: 100%;
+  margin-right: auto;
+}
+
+/*#subscribe {
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: $gray-100;
+
+    .subscribe-header {
+        h1 {
+            text-align: center;
+
+            .text-lg {
+                color: #9397ad;
+            }
+        }
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+
+        .newsletter-signup {
+
+            h5 {
+
+                @include h5;
+            }
+        }
+
+
+        .options {
+            div {
+                display: flex;
+                justify-content: space-between;
+
+                label {
+                    input[type="checkbox"] {
+                        margin-right: 5px;
+
+                    }
+                }
+            }
+        }
+
+        .email-input {
+            display: flex;
+            justify-content: space-between;
+
+            input[type="email"] {
+                width: 80%;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        }
+
+        button {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        p {
+            font-size: 0.8rem;
+        }
+    }
+}
+*/
 .signup {
   height: 100%;
 }
