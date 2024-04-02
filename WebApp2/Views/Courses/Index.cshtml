@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WebApp2.ViewModels.CourseViewModel>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="container">
+    <h1>Courses</h1>
+    <div class="courses-container">
+        @foreach (var course in Model)
+        {
+            <div class="course">
+                <div class="course-image">
+                    <img src="~/images/courses/@(course.ImageName)" alt="@(course.Title)">
+                    @if (course.IsBestseller)
+                    {
+                        <div class="best-seller">Best Seller</div>
+                    }
+                </div>
+                <div class="course-info">
+                    <h5>@(course.Title)</h5>
+                    <p>@(course.Author)</p>
+                    <div class="pricing">
+                        @if (course.DiscountPrice < course.OriginalPrice)
+                        {
+                            <span class="discount-price">@($"${course.DiscountPrice}")</span>
+                            <span class="original-price">@($"${course.OriginalPrice}")</span>
+                        }
+                        else
+                        {
+                            <span>@($"${course.OriginalPrice}")</span>
+                        }
+                    </div>
+                    <hr>
+                    <div class="additional-info">
+                        <span class="hours"><i class="fa fa-clock-o"></i> @(course.Hours) hours</span>
+                        <span class="likes"><i class="fa fa-thumbs-up"></i> @(course.LikesInProcent)% (@(course.LikesInNumbers))</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

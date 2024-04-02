@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">An error has occurred</h1>
+<p>We're sorry, something went wrong. Please try again later.</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <p><strong>Error Details:</strong> @ViewBag.ErrorMessage</p>
+}

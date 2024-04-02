@@ -41,10 +41,10 @@ var app = builder.Build();
 
 
 app.UseCors(builder =>
-    builder.WithOrigins("http://localhost:{7234}") // Ersätt {PORT} med porten för din MVC-applikation
+    builder.WithOrigins("http://localhost:{7234}")
            .AllowAnyMethod()
            .AllowAnyHeader());
-
+app.UseExceptionHandler("/Home/Error");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
