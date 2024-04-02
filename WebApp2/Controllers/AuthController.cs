@@ -24,7 +24,7 @@ namespace WebApp2.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+                return RedirectToAction("RedirectToDetails", "Accounts");
             }
 
             return View(new SignUpModel());
@@ -58,7 +58,7 @@ namespace WebApp2.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+                return RedirectToAction("RedirectToDetails", "Accounts");
             }
 
             return View(new SignInModel());
@@ -75,7 +75,7 @@ namespace WebApp2.Controllers
 			{
 				var result = await _userService.SignInUserAsync(model);
 				if (result.StatusCode == MyStatusCode.OK)
-                    return RedirectToAction(nameof(AccountsController.Details), "Accounts");
+                    return RedirectToAction("RedirectToDetails", "Accounts");
             }
 
 			ModelState.AddModelError(string.Empty, "Incorrect email or password.");

@@ -16,9 +16,10 @@ public class DataContext : IdentityDbContext<UserEntity>
 	public DbSet<AddressEntity> Addresses { get; set; }
 	public DbSet<FeatureEntity> Features { get; set; }
 	public DbSet<FeatureItemEntity> FeatureItems { get; set; }
+    public DbSet<SubscriberEntity> Subscribers { get; set; }
 
-	// Övriga konfigurationer och metodöverlagringar vid behov
-	protected override void OnModelCreating(ModelBuilder builder)
+    // Övriga konfigurationer och metodöverlagringar vid behov
+    protected override void OnModelCreating(ModelBuilder builder)
 	{
 		base.OnModelCreating(builder);
 

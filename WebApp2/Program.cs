@@ -4,8 +4,13 @@ using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
 
 // Lägg till stöd för kontroller och vyer
 builder.Services.AddControllersWithViews();
@@ -30,7 +35,18 @@ builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<FeatureService>();
 
+
+
 var app = builder.Build();
+
+
+app.UseCors(builder =>
+    builder.WithOrigins("http://localhost:{7234}") // Ersätt {PORT} med porten för din MVC-applikation
+           .AllowAnyMethod()
+           .AllowAnyHeader());
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 //app.UseStatusCodePagesWithReExecute("/error", "statusCode={0}");
 

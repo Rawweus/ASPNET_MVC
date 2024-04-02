@@ -1,4 +1,5 @@
-﻿
+﻿@model WebApp2.ViewModels.SubscriberViewModel
+
 <section class="showcase">
     <img class="background-image" src="~/images/showcase-taskmaster.png" />
     <div class="container">
@@ -57,7 +58,7 @@
 </section>
 <section id="dashboard">
     <div class="container">
-        <img src="images/dashboard.svg" alt="" />
+        <img src="~/images/dashboard.svg" alt="" />
         <div>
             <h2>Manage Your Work</h2>
             <i class="fa-regular fa-square-check"></i> Powerful project management
@@ -82,71 +83,89 @@
         </div>
         <div class="integration-options">
             <div class="integration-item">
-                <img src="images/icons/Google.svg" alt="Icon Description 1">
+                <img src="~/images/icons/Google.svg" alt="Icon Description 1">
                 <p>Lorem magnis pretium sed curabitur nunc facilisi nunc cursus sagittis.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/Zoom.svg" alt="Icon Description 2">
+                <img src="~/images/icons/Zoom.svg" alt="Icon Description 2">
                 <p>In eget a mauris quis. Tortor dui tempus quis integer est sit natoque placerat dolor.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/Slack.svg" alt="Icon Description 3">
+                <img src="~/images/icons/Slack.svg" alt="Icon Description 3">
                 <p>Id mollis consectetur congue egestas egestas suspendisse blandit justo.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/gmail.svg" alt="Icon Description 4">
+                <img src="~/images/icons/gmail.svg" alt="Icon Description 4">
                 <p>Rutrum interdum tortor, sed at nulla. A cursus bibendum elit purus cras praesent.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/Trello.svg" alt="Icon Description 5">
+                <img src="~/images/icons/Trello.svg" alt="Icon Description 5">
                 <p>Congue pellentesque amet, viverra curabitur quam diam scelerisque fermentum urna.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/MailChimp.svg" alt="Icon Description 6">
+                <img src="~/images/icons/MailChimp.svg" alt="Icon Description 6">
                 <p>A elementum, imperdiet enim, pretium etiam facilisi in aenean quam mauris.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/Dropbox.svg" alt="Icon Description 7">
+                <img src="~/images/icons/Dropbox.svg" alt="Icon Description 7">
                 <p>Ut in turpis consequat odio diam lectus elementum. Est faucibus blandit platea.</p>
             </div>
             <div class="integration-item">
-                <img src="images/icons/Evernote.svg" alt="Icon Description 8">
+                <img src="~/images/icons/Evernote.svg" alt="Icon Description 8">
                 <p>Faucibus cursus maecenas lorem cursus nibh. Sociis sit risus id. Sit facilisis dolor arcu.</p>
             </div>
 
         </div>
     </div>
 </section>
-<section id="subscribe">
+<form asp-controller="Subscribers" asp-action="Subscribe" method="post">
+    <section id="subscribe">
         <div class="subscribe-header">
             <h1>Don't Want To Miss Anything?</h1>
         </div>
-
         <div class="container">
             <div class="newsletter-signup">
                 <h5>Sign up for <br>newsletter<br /></h5>
             </div>
-        <div class="subscriptions">
-            <div>
-                <label><input type="checkbox" name="subscriptions" value="daily-newsletter"> Daily Newsletter</label>
-                <label><input type="checkbox" name="subscriptions" value="advertising-updates"> Advertising Updates</label>
-                <label><input type="checkbox" name="subscriptions" value="week-in-review"> Week in Review</label>
+            <div class="subscriptions">
+                <div>
+                    <label><input type="checkbox" name="subscriptions" value="daily-newsletter" disabled> Daily Newsletter</label>
+                    <label><input type="checkbox" name="subscriptions" value="advertising-updates" disabled> Advertising Updates</label>
+                    <label><input type="checkbox" name="subscriptions" value="week-in-review" disabled> Week in Review</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="subscriptions" value="newsletters" disabled> Newsletters</label>
+                    <label><input type="checkbox" name="subscriptions" value="event-updates" disabled> Event Updates</label>
+                    <label><input type="checkbox" name="subscriptions" value="startups-weekly" disabled> Startups Weekly</label>
+                    <label><input type="checkbox" name="subscriptions" value="podcasts" disabled> Podcasts</label>
+                </div>
             </div>
-            <div>
-                <label><input type="checkbox" name="subscriptions" value="newsletters"> Newsletters</label>
-                <label><input type="checkbox" name="subscriptions" value="event-updates"> Event Updates</label>
-                <label><input type="checkbox" name="subscriptions" value="startups-weekly"> Startups Weekly</label>
-                <label><input type="checkbox" name="subscriptions" value="podcasts"> Podcasts</label>
-            </div>
-        </div>
         </div>
         <div class="form-group">
-        <div class="email-input">
-            <input type="email" placeholder="Your Email">
-            <button class="btn-theme-s">Subscribe*</button>
-        </div>
-            <p class="terms-text"> *Yes, I Agree to the terms and privacy policy</p>
-        </div>
+            <div class="email-input">
+                <input asp-for="Email" type="email" placeholder="Your Email">
+                <button type="submit" class="btn-theme-s">Subscribe*</button>
+            </div>
+            @if (ViewBag.SubscriptionSuccessMessage != null)
+            {
+                <p>@ViewBag.SubscriptionSuccessMessage</p>
+                <script>
+                    sessionStorage.setItem("SubscriptionSuccessMessage", "true");
+                </script>
+            }
+            @if (ViewBag.SubscriptionErrorMessage != null)
+            {
+                <p>@ViewBag.SubscriptionErrorMessage</p>
+            }
 
-        
+            <p class="terms-text"> *Yes, I Agree to the terms and privacy policy</p>
+            <p id="subscription-message" style="display:none;">You have now subscribed to our newsletter!</p>
+        </div>
     </section>
+
+</form>
+
+
+
+
+
