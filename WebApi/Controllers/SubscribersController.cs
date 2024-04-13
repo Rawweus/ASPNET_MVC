@@ -2,7 +2,7 @@
 using Infrastructure.Contexts;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Dtos; // Se till att detta pekar på rätt namnrymd där SubscriberDto finns
+using WebApi.Dtos;
 
 namespace WebApi.Controllers
 {

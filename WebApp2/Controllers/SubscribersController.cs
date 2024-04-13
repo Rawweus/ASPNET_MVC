@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Net.Http;
-using WebApp2.ViewModels; // Antag att detta är korrekt plats för SubscriberViewModel
+using WebApp2.ViewModels;
 
 namespace WebApp2.Controllers;
 
@@ -33,10 +31,10 @@ public class SubscribersController : Controller
             }
             else
             {
-                // Hämtar responsens innehåll som en sträng
+
                 var errorContent = await response.Content.ReadAsStringAsync();
 
-                // Anpassar felmeddelandet baserat på statuskoden
+
                 switch (response.StatusCode)
                 {
                     case System.Net.HttpStatusCode.BadRequest:
@@ -56,8 +54,7 @@ public class SubscribersController : Controller
             }
         }
 
-        // Här skapar du ett nytt tomt modellobjekt som ska användas om ModelState inte är giltig
-        // eller om du vill återgå till formuläret utan att visa tidigare inmatade värden.
+
         var emptyModel = new SubscriberViewModel();
         return View("~/Views/Home/Index.cshtml", emptyModel);
     }

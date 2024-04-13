@@ -15,7 +15,7 @@
 
 <nav>
     <a class="btn-theme-s" asp-controller="Accounts" asp-action="Details">Account Details</a>
-    <!-- Använd ett formulär för att skicka en POST-begäran för utloggning -->
+
     <form asp-controller="Auth" asp-action="SignOut" method="post" style="display: inline;">
         <button type="submit" class="btn-gray">Sign Out</button>
     </form>
@@ -108,21 +108,3 @@
 	</div>
 </section>
 
-@*
-
-Det här är en sida där användare kan se och ändra sin profilinformation. 
-Sidan är uppdelad i två delar: en för grundläggande info som namn och e-post, 
-och en annan för adress.
-
-- Överst finns en bild och användarens namn och e-post.
-- Det finns knappar för att gå tillbaka till kontodetaljer eller logga ut.
-- Användare kan fylla i eller ändra sitt förnamn, efternamn, e-post, telefon 
-och en kort beskrivning om sig själva.
-- Det finns även fält för att uppdatera adressen med gatunamn, postnummer och stad.
-- På sidan finns "Save changes" för att spara ändringar eller "Cancel" för att ångra dem.
-
-Allt som fylls i eller ändras kan kontrolleras direkt på sidan för att se 
-till att informationen är korrekt.
-
-
-*@

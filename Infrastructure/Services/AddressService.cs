@@ -37,12 +37,12 @@ public class AddressService
 	{
 		try
 		{
-			// Använd _addressRepository för att kontrollera om en adress redan finns
+
 			bool exists = await _addressRepository.AlreadyExistsAsync(a => a.AddressLine1 == addressLine1 && a.AddressLine2 == addressLine2 && a.PostalCode == postalCode && a.City == city);
 
 			if (!exists)
 			{
-				// Om adressen inte finns, skapa en ny
+
 				AddressEntity newAddress = new AddressEntity
 				{
 					AddressLine1 = addressLine1,
@@ -52,16 +52,16 @@ public class AddressService
 				};
 				newAddress = await _addressRepository.AddAsync(newAddress);
 
-				return ResponseFactory.Ok(newAddress); // Antag att detta skapar ett ResponseResult objekt med OK-status och den nya adressen
+				return ResponseFactory.Ok(newAddress);
 			}
 			else
 			{
-				return ResponseFactory.Exists("Adressen finns redan."); // Antag att detta skapar ett ResponseResult objekt med Exists-status
+				return ResponseFactory.Exists("Adressen finns redan."); 
 			}
 		}
 		catch (Exception ex)
 		{
-			return ResponseFactory.Error(ex.Message); // Antag att detta skapar ett ResponseResult objekt med Error-status
+			return ResponseFactory.Error(ex.Message); 
 		}
 	}
 
@@ -76,33 +76,3 @@ public class AddressService
 	}
 }
 
-
-
-
-
-
-
-
-
-
-/*
-`AddressService` använder `AddressRepository` för att hantera adressrelaterade 
-operationer som att hämta eller skapa adresser. Detta service-lager förenklar 
-interaktionen mellan applikationens användargränssnitt/logik och datalagret.
-
-- `GetOrCreateAddressAsync`: Försöker först hitta en befintlig adress med 
-angivna parametrar. Om adressen inte finns, skapas en ny adress. 
-Detta säkerställer att adresser inte dupliceras i databasen.
-
-- `CreateAddressAsync`: Skapar en ny adress efter att ha kontrollerat att en 
-likadan adress inte redan existerar i databasen. Använder `AddressFactory` 
-för att skapa adressobjekt och `AddressRepository` för att spara adressen. 
-Returnerar den skapade adressen eller ett felmeddelande.
-
-- `GetAddressAsync`: Söker efter en adress baserat på gatunamn, postnummer och stad. 
-Returnerar adressen om den hittas, annars ett meddelande om att adressen inte kunde hittas.
-
-Dessa metoder bidrar till att effektivisera hanteringen av adressdata, vilket 
-underlättar skapandet av nya adresser och sökning efter befintliga adresser 
-utan att introducera duplicering.
-*/

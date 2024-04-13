@@ -230,6 +230,28 @@ form .checkbox span.field-validation-error {
   font-size: 14px !important;
   color: #EF4444;
 }
+form span.field-validation-valid {
+  position: static;
+  top: 0;
+  right: 0;
+  line-height: 160%;
+  font-weight: 400;
+  color: #565973;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px !important;
+  color: #EF4444;
+}
+form span.field-validation-error {
+  position: static;
+  top: 0;
+  right: 0;
+  line-height: 160%;
+  font-weight: 400;
+  color: #565973;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px !important;
+  color: #EF4444;
+}
 form .checkbox-group {
   display: flex;
   justify-content: flex-start;

@@ -13,7 +13,7 @@ public class AccountsController : Controller
 {
 	private readonly UserManager<UserEntity> _userManager;
 	private readonly UserRepository _userRepository;
-	private readonly DataContext _context; // Din DataContext
+	private readonly DataContext _context;
     private readonly IHttpClientFactory _httpClientFactory;
 
     public AccountsController(UserManager<UserEntity> userManager, UserRepository userRepository, DataContext context)
@@ -83,7 +83,7 @@ public class AccountsController : Controller
             ModelState.AddModelError("", result.Message);
         }
 
-        // Återgå till /account-sidan om validering misslyckades
+
         return RedirectToAction("Details", "Accounts");
     }
 

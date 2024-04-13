@@ -11,10 +11,10 @@ builder.Services.AddDbContext<DataContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddHttpClient();
 
-// Konfigurera inbyggd loggning
-builder.Logging.ClearProviders(); // Rensa standardloggningstjänster om du vill
-builder.Logging.AddConsole(); // Lägg till konsolloggning
-builder.Logging.AddDebug(); // Lägg till debugloggning
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); 
+builder.Logging.AddDebug();
 
 
 var app = builder.Build();
